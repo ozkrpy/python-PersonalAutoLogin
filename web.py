@@ -24,8 +24,10 @@ try:
         EC.presence_of_element_located((By.ID, "links"))
     )
     results = browser.find_elements_by_id('links')
-    time.sleep(10)
+    # time.sleep(10)
     print(results[0].text) 
+    pin = input('PIN:')
+    print(pin)
     browser.close()
     quit()
 except Exception as error:
