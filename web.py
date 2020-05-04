@@ -20,7 +20,7 @@ try:
     opts.headless = True
     browser = Firefox(options=opts)
     browser.get(
-        'file:///C:\\Users\\ozkrp\\Downloads\\Teletrabajo\\teletrabajo.html')
+        'https://seguridad.personal.com.py/teletrabajo/')
     search_next = browser.find_element_by_id('nextBtn')
     # search_form.submit()
     # results = browser.find_elements_by_class_name('result__body')
@@ -33,5 +33,4 @@ try:
     browser.close()
     quit()
 except Exception as error:
-    paises = []
     print("{}".format(error))
