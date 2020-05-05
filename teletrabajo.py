@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 try:
+    print("Cargando sitio web.")
     # asume que geckodriver esta copiado en /path/to/python/Scripts, sino descargarlo (https://github.com/mozilla/geckodriver/releases) y depositarlo en /path/to/python/Scripts
     opts = Options()
     opts.headless = True
@@ -23,6 +24,7 @@ try:
     numero_linea.send_keys(linea)
     # Clic en Siguiente para pasar al step3: Pantalla de notificacion que se envio el SMS.
     button_next.click()
+    print("Aguarda 10 segundos para recepcionar el PIN.")
     # Darle un tiempo para que se recepcione el SMS.
     time.sleep(10)
     # Clic en Siguiente para pasar al step4: Pantalla para ingresar el pin.
