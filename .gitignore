@@ -1,2 +1,5 @@
 # ignore all logs
 *.log
+build/
+__pycache__/
+*.spec

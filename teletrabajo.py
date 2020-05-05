@@ -43,9 +43,10 @@ try:
         wait = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "fo1"))
         )
-        inicializar_forti = browser.find_element_by_partial_link_text("ACTIVAR e ingresar").click()
+        browser.find_element_by_partial_link_text("ACTIVAR e ingresar").click()
     except Exception as error:
         print("No se pudo hacer clic en iniciar Forti desde la pagina.")
+        print("Mensaje:","{}".format(error))
     # Cierra la sesion y mata el proceso.
     print("Listo, ya se puede acceder al VPN.")
     browser.close()
