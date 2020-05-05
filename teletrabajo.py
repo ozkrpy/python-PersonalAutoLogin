@@ -7,9 +7,9 @@ import time
 
 try:
     # asume que geckodriver esta copiado en /path/to/python/Scripts, sino descargarlo (https://github.com/mozilla/geckodriver/releases) y depositarlo en /path/to/python/Scripts
-    # opts = Options()
-    # opts.headless = True
-    browser = Firefox()#options=opts)
+    opts = Options()
+    opts.headless = True
+    browser = Firefox(options=opts)
     # Cargar la pagina de Teletrabajo, y buscar el boton 'Siguiente/Acepto'.
     browser.get(
         'https://seguridad.personal.com.py/teletrabajo/'
