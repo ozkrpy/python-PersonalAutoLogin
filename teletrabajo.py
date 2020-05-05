@@ -1,8 +1,8 @@
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
 import time
 
 try:
@@ -19,7 +19,7 @@ try:
     button_next.click()
     # Obtiene el campo de numero de linea, y envia los digitos.
     numero_linea = browser.find_element_by_name('cphone')
-    numero_linea.send_keys('595971325507')
+    numero_linea.send_keys('XXXXXXXXXXXX')
     # Clic en Siguiente para pasar al step3: Pantalla de notificacion que se envio el SMS.
     button_next.click()
     # Darle un tiempo para que se recepcione el SMS.
@@ -39,7 +39,7 @@ try:
     button_next.click()
     # Clic en inicializar y habilitar la conexion VPN.
     inicializar_forti = browser.find_element_by_id('fo1')
-    inicializar_forti.clic()
+    inicializar_forti.click()
     # Cierra la sesion y mata el proceso.
     browser.close()
     quit()
