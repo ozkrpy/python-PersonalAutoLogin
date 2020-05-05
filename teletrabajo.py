@@ -1,8 +1,8 @@
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 try:
@@ -18,8 +18,9 @@ try:
     # Clic en Siguiente para pasar al step2: Pantalla para ingresar el numero de linea.
     button_next.click()
     # Obtiene el campo de numero de linea, y envia los digitos.
+    linea = input('LINEA (59597XXXXXXX):')
     numero_linea = browser.find_element_by_name('cphone')
-    numero_linea.send_keys('XXXXXXXXXXXX')
+    numero_linea.send_keys(linea)
     # Clic en Siguiente para pasar al step3: Pantalla de notificacion que se envio el SMS.
     button_next.click()
     # Darle un tiempo para que se recepcione el SMS.
@@ -38,9 +39,15 @@ try:
     # Clic en Siguiente para pasar al step6: Pantalla para inicializar el Forti.
     button_next.click()
     # Clic en inicializar y habilitar la conexion VPN.
-    inicializar_forti = browser.find_element_by_id('fo1')
-    inicializar_forti.click()
+    try:
+        wait = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.ID, "fo1"))
+        )
+        inicializar_forti = browser.find_element_by_partial_link_text("ACTIVAR e ingresar").click()
+    except Exception as error:
+        print("No se pudo hacer clic en iniciar Forti desde la pagina.")
     # Cierra la sesion y mata el proceso.
+    print("Listo, ya se puede acceder al VPN.")
     browser.close()
     quit()
 except Exception as error:
