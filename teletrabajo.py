@@ -3,14 +3,14 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from time import sleep
 
 try:
     print("Cargando sitio web.")
     # asume que geckodriver esta copiado en /path/to/python/Scripts, sino descargarlo (https://github.com/mozilla/geckodriver/releases) y depositarlo en /path/to/python/Scripts
-    # opts = Options()
-    # opts.headless = True
-    browser = Firefox()#options=opts)
+    opts = Options()
+    opts.headless = True
+    browser = Firefox(options=opts)
     # Cargar la pagina de Teletrabajo, y buscar el boton 'Siguiente/Acepto'.
     browser.get(
         'https://seguridad.personal.com.py/teletrabajo/'
@@ -56,6 +56,7 @@ try:
         activar_forti = browser.find_element_by_id("fo1")
         time.sleep(5)
         activar_forti.click()
+        time.sleep(5)
     except Exception as error:
         print("No se pudo hacer clic en iniciar Forti desde la pagina.")
         print("Mensaje:","{}".format(error))
