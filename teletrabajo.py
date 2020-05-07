@@ -26,7 +26,7 @@ try:
     button_next.click()
     print("Aguarda 10 segundos para recepcionar el PIN.")
     # Darle un tiempo para que se recepcione el SMS.
-    time.sleep(5)
+    sleep(5)
     # Clic en Siguiente para pasar al step4: Pantalla para ingresar el pin.
     button_next.click()
     # Ingresar el pin recibido en el celular.
@@ -41,7 +41,7 @@ try:
             EC.presence_of_element_located((By.NAME, "dd"))
         )
         numero_horas = browser.find_element_by_name('dd')
-        time.sleep(5)
+        sleep(5)
         numero_horas.send_keys(10)
     except Exception as error:
         print("Error al intentar ingresar total de horas.")
@@ -54,9 +54,9 @@ try:
             EC.presence_of_element_located((By.ID, "fo1"))
         )
         activar_forti = browser.find_element_by_id("fo1")
-        time.sleep(5)
+        sleep(5)
         activar_forti.click()
-        time.sleep(5)
+        sleep(5)
     except Exception as error:
         print("No se pudo hacer clic en iniciar Forti desde la pagina.")
         print("Mensaje:","{}".format(error))
