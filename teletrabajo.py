@@ -8,9 +8,9 @@ from time import sleep
 try:
     print("Cargando sitio web.")
     # asume que geckodriver esta copiado en /path/to/python/Scripts, sino descargarlo (https://github.com/mozilla/geckodriver/releases) y depositarlo en /path/to/python/Scripts
-    # opts = Options()
-    # opts.headless = True
-    browser = Firefox()#options=opts)
+    opts = Options()
+    opts.headless = True
+    browser = Firefox(options=opts)
     # Cargar la pagina de Teletrabajo, y buscar el boton 'Siguiente/Acepto'.
     browser.get(
         'https://seguridad.personal.com.py/teletrabajo/'
@@ -24,9 +24,9 @@ try:
     numero_linea.send_keys(linea)
     # Clic en Siguiente para pasar al step3: Pantalla de notificacion que se envio el SMS.
     button_next.click()
-    print("Aguarda 10 segundos para recepcionar el PIN.")
+    print("Aguarda unos segundos para recepcionar el PIN.")
     # Darle un tiempo para que se recepcione el SMS.
-    sleep(5)
+    sleep(3)
     # Clic en Siguiente para pasar al step4: Pantalla para ingresar el pin.
     button_next.click()
     # Ingresar el pin recibido en el celular.
@@ -48,7 +48,7 @@ try:
         print("Mensaje:","{}".format(error))
     # Clic en Siguiente para pasar al step6: Pantalla para inicializar el Forti.
     button_next.click()
-    # Clic en inicializar y habilitar la conexion VPN.
+    # Clic en iniciar y habilitar la conexion VPN.
     try:
         wait = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, "fo1"))
@@ -56,13 +56,15 @@ try:
         activar_forti = browser.find_element_by_id("fo1")
         sleep(3)
         activar_forti.click()
-        sleep(3)
-        obj = driver.switch_to.alert
+        sleep(2)
+        # Maneja el mensaje de alerta que aparece en la pagina tras el click.
+        obj = browser.switch_to.alert
         msg=obj.text
-        print ("Estado: "+ msg )
+        print ("Estado: "+ msg)
+        sleep(1)
         obj.accept()
     except Exception as error:
-        print("No se pudo hacer clic en iniciar Forti desde la pagina.")
+        # print("No se pudo hacer clic en iniciar Forti desde la pagina.")
         print("Mensaje:","{}".format(error))
     # Cierra la sesion y mata el proceso.
     print("Listo, ya se puede acceder al VPN.")
