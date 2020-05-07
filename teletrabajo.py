@@ -8,9 +8,9 @@ from time import sleep
 try:
     print("Cargando sitio web.")
     # asume que geckodriver esta copiado en /path/to/python/Scripts, sino descargarlo (https://github.com/mozilla/geckodriver/releases) y depositarlo en /path/to/python/Scripts
-    opts = Options()
-    opts.headless = True
-    browser = Firefox(options=opts)
+    # opts = Options()
+    # opts.headless = True
+    browser = Firefox()#options=opts)
     # Cargar la pagina de Teletrabajo, y buscar el boton 'Siguiente/Acepto'.
     browser.get(
         'https://seguridad.personal.com.py/teletrabajo/'
@@ -41,7 +41,7 @@ try:
             EC.presence_of_element_located((By.NAME, "dd"))
         )
         numero_horas = browser.find_element_by_name('dd')
-        sleep(5)
+        sleep(2)
         numero_horas.send_keys(10)
     except Exception as error:
         print("Error al intentar ingresar total de horas.")
@@ -54,9 +54,13 @@ try:
             EC.presence_of_element_located((By.ID, "fo1"))
         )
         activar_forti = browser.find_element_by_id("fo1")
-        sleep(5)
+        sleep(3)
         activar_forti.click()
-        sleep(5)
+        sleep(3)
+        obj = driver.switch_to.alert
+        msg=obj.text
+        print ("Estado: "+ msg )
+        obj.accept()
     except Exception as error:
         print("No se pudo hacer clic en iniciar Forti desde la pagina.")
         print("Mensaje:","{}".format(error))
@@ -64,4 +68,4 @@ try:
     print("Listo, ya se puede acceder al VPN.")
     browser.close()
 except Exception as error:
-    print('ERROR GENERAL:',"{}".format(error))
+    print("{}".format(error))
