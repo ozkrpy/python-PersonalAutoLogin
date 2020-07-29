@@ -35,8 +35,7 @@ try:
     numero_pin.send_keys(pin)
     # Clic en Siguiente para pasar al step5: Pantalla para ingresar cantidad de horas.
     button_next.click()
-        # Modificacion semana del 27/07/2020: se quito la cantidad de horas.
-    # Setear la cantidad de horas a loguearse en el vpn.
+    # Modificacion semana del 27/07/2020: se quito la cantidad de horas. Setear la cantidad de horas a loguearse en el vpn.
     # try:
     #     wait = WebDriverWait(browser, 10).until(
     #         EC.presence_of_element_located((By.NAME, "dd"))
@@ -48,7 +47,6 @@ try:
     #     print("Error al intentar ingresar total de horas.")
     #     print("Mensaje:","{}".format(error))
     # Clic en Siguiente para pasar al step6: Pantalla para inicializar el Forti.
-
     # button_next.click()
     # Clic en iniciar y habilitar la conexion VPN.
     try:

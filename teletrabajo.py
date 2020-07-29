@@ -36,18 +36,18 @@ try:
     # Clic en Siguiente para pasar al step5: Pantalla para ingresar cantidad de horas.
     button_next.click()
     # Setear la cantidad de horas a loguearse en el vpn.
-    try:
-        wait = WebDriverWait(browser, 10).until(
-            EC.presence_of_element_located((By.NAME, "dd"))
-        )
-        numero_horas = browser.find_element_by_name('dd')
-        sleep(2)
-        numero_horas.send_keys(10)
-    except Exception as error:
-        print("Error al intentar ingresar total de horas.")
-        print("Mensaje:","{}".format(error))
-    # Clic en Siguiente para pasar al step6: Pantalla para inicializar el Forti.
-    button_next.click()
+    # try:
+    #     wait = WebDriverWait(browser, 10).until(
+    #         EC.presence_of_element_located((By.NAME, "dd"))
+    #     )
+    #     numero_horas = browser.find_element_by_name('dd')
+    #     sleep(2)
+    #     numero_horas.send_keys(10)
+    # except Exception as error:
+    #     print("Error al intentar ingresar total de horas.")
+    #     print("Mensaje:","{}".format(error))
+    # # Clic en Siguiente para pasar al step6: Pantalla para inicializar el Forti.
+    # button_next.click()
     # Clic en iniciar y habilitar la conexion VPN.
     try:
         wait = WebDriverWait(browser, 10).until(
