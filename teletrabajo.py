@@ -35,19 +35,6 @@ try:
     numero_pin.send_keys(pin)
     # Clic en Siguiente para pasar al step5: Pantalla para ingresar cantidad de horas.
     button_next.click()
-    # Setear la cantidad de horas a loguearse en el vpn.
-    # try:
-    #     wait = WebDriverWait(browser, 10).until(
-    #         EC.presence_of_element_located((By.NAME, "dd"))
-    #     )
-    #     numero_horas = browser.find_element_by_name('dd')
-    #     sleep(2)
-    #     numero_horas.send_keys(10)
-    # except Exception as error:
-    #     print("Error al intentar ingresar total de horas.")
-    #     print("Mensaje:","{}".format(error))
-    # # Clic en Siguiente para pasar al step6: Pantalla para inicializar el Forti.
-    # button_next.click()
     # Clic en iniciar y habilitar la conexion VPN.
     try:
         wait = WebDriverWait(browser, 10).until(
@@ -55,19 +42,24 @@ try:
         )
         activar_forti = browser.find_element_by_id("fo1")
         sleep(3)
-        activar_forti.click()
-        sleep(2)
-        # Maneja el mensaje de alerta que aparece en la pagina tras el click.
-        obj = browser.switch_to.alert
-        msg=obj.text
-        print ("Estado: "+ msg)
-        sleep(1)
-        obj.accept()
+        reconectarse = 's'
+        while reconectarse=='s':
+            #print('entro al while')
+            activar_forti.click()
+            sleep(2)
+            # Maneja el mensaje de alerta que aparece en la pagina tras el click.
+            obj = browser.switch_to.alert
+            msg=obj.text
+            print ("Estado: "+ msg)
+            sleep(1)
+            obj.accept()
+            print("Listo, ya se puede acceder al VPN.")
+            reconectarse = input('Reconectarse(s/n)?: ')
     except Exception as error:
         # print("No se pudo hacer clic en iniciar Forti desde la pagina.")
-        print("Mensaje:","{}".format(error))
+        print("No se activo la sesion VPN: ","{}".format(error))
     # Cierra la sesion y mata el proceso.
-    print("Listo, ya se puede acceder al VPN.")
     browser.close()
+    print('Ya se puede cerrar la aplicacion.')
 except Exception as error:
     print("{}".format(error))
