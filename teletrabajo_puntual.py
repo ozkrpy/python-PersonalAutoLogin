@@ -4,61 +4,65 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
+import constantes
 
-try:
-    print("Cargando sitio web.")
-    # asume que geckodriver esta copiado en /path/to/python/Scripts, sino descargarlo (https://github.com/mozilla/geckodriver/releases) y depositarlo en /path/to/python/Scripts
-    opts = Options()
-    opts.headless = True
-    browser = Firefox(options=opts)
-    # Cargar la pagina de Teletrabajo, y buscar el boton 'Siguiente/Acepto'.
-    browser.get(
-        'https://seguridad.personal.com.py/teletrabajo/'
-    )
-    button_next = browser.find_element_by_id('nextBtn')
-    # Clic en Siguiente para pasar al step2: Pantalla para ingresar el numero de linea.
-    button_next.click()
-    # Obtiene el campo de numero de linea, y envia los digitos.
-    # linea = input('LINEA (59597XXXXXXX):')
-    numero_linea = browser.find_element_by_name('cphone')
-    numero_linea.send_keys('595971325507')
-    # Clic en Siguiente para pasar al step3: Pantalla de notificacion que se envio el SMS.
-    button_next.click()
-    print("Aguarda unos segundos para recepcionar el PIN.")
-    # Darle un tiempo para que se recepcione el SMS.
-    sleep(3)
-    # Clic en Siguiente para pasar al step4: Pantalla para ingresar el pin.
-    button_next.click()
-    # Ingresar el pin recibido en el celular.
-    pin = input('PIN:')
-    numero_pin = browser.find_element_by_name('pin')
-    numero_pin.send_keys(pin)
-    # Clic en Siguiente para pasar al step5: Pantalla para ingresar cantidad de horas.
-    button_next.click()
-    try:
-        wait = WebDriverWait(browser, 10).until(
-            EC.presence_of_element_located((By.ID, "fo1"))
+class Bot():
+    def __init__(self):    
+        print("Cargando sitio web.")
+        self.opts = Options()
+        self.opts.headless = True
+        self.browser = Firefox()#options=opts)
+        self.browser.get(
+            constantes.URL
         )
-        activar_forti = browser.find_element_by_id("fo1")
+        self.button_next = self.browser.find_element_by_id('nextBtn')
+        self.button_next.click()
+        self.numero_linea = self.browser.find_element_by_name('cphone')
+        self.numero_linea.send_keys('595971325507')
+        self.button_next.click()
+        print("Aguarda unos segundos para recepcionar el PIN.")
         sleep(3)
-        reconectarse = 's'
-        while reconectarse=='s':
-            #print('entro al while')
-            activar_forti.click()
-            sleep(2)
-            # Maneja el mensaje de alerta que aparece en la pagina tras el click.
-            obj = browser.switch_to.alert
-            msg=obj.text
-            print ("Estado: "+ msg)
-            sleep(1)
-            obj.accept()
-            print("Listo, ya se puede acceder al VPN.")
-            reconectarse = input('Reconectarse(s/n)?: ')
-    except Exception as error:
-        # print("No se pudo hacer clic en iniciar Forti desde la pagina.")
-        print("No se activo la sesion VPN: ","{}".format(error))
-    # Cierra la sesion y mata el proceso.
-    print('Hasta luego.')
-    browser.close()
+        self.button_next.click()
+        self.pin = input('PIN:')
+        self.numero_pin = self.browser.find_element_by_name('pin')
+        self.numero_pin.send_keys(self.pin)
+        self.button_next.click()
+        try:
+            self.wait = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.ID, "fo1"))
+            )
+            self.activar_forti = self.browser.find_element_by_id("fo1")
+            sleep(3)
+            self.reconectarse = 's'
+            while reconectarse.lower()=='s':
+                self.activar_forti.click()
+                sleep(2)
+                self.obj = self.browser.switch_to.alert
+                self.msg=obj.text
+                print ("Estado: "+ msg)
+                sleep(1)
+                self.obj.accept()
+                print("Listo, ya se puede acceder al VPN.")
+
+                # NEED TO TEST THIS BLOCK: pop-up que solicita seleccionar FortiClient.
+                # Find our target window
+                # handle = page.driver.find_window("My window title")
+
+                # # Close it
+                # page.driver.browser.switch_to.window(handle)
+                # page.driver.browser.close
+
+                # # Have the Selenium driver point to another window
+                # last_handle = page.driver.browser.window_handles.last
+                # page.driver.browser.switch_to.window(last_handle)
+
+                self.reconectarse = input('Reconectarse(s/n)?: ')
+        except Exception as error:
+            print("No se activo la sesion VPN:","{}".format(error))
+        self.browser.close()
+        print('Ya se puede cerrar la aplicacion.')
+try:
+    obj = Bot()
 except Exception as error:
-    print("{}".format(error))
+    print("ERROR GENERAL DEL PROCESO:","{}".format(error))
+   
