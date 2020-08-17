@@ -38,12 +38,12 @@ class Bot():
             self.activar_forti = self.browser.find_element_by_id("fo1")
             sleep(3)
             self.reconectarse = 's'
-            while reconectarse.lower()=='s':
+            while self.reconectarse.lower()=='s':
                 self.activar_forti.click()
                 sleep(2)
                 self.obj = self.browser.switch_to.alert
-                self.msg=obj.text
-                print ("Estado: "+ msg)
+                self.msg=self.obj.text
+                print ("Estado: "+ self.msg)
                 sleep(1)
                 self.obj.accept()
                 print("Listo, ya se puede acceder al VPN.")
@@ -66,7 +66,7 @@ class Bot():
         self.browser.close()
         print('Ya se puede cerrar la aplicacion.')
 try:
-    obj = Bot()
+    init_bot = Bot()
 except Exception as error:
     print("ERROR GENERAL DEL PROCESO:","{}".format(error))
    
