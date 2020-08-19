@@ -8,13 +8,15 @@ from time import sleep
 import constantes
 
 class Bot():
-    def __init__(self):    
+    def __init__(self):   
+        print("Inicializando el navegador.")
         self.opts = Options()
         self.opts.headless = True
         if (constantes.FIREFOX_PERFIL == ''):
             print('Es necesario agregar el path del perfil activo de Firefox.')
-            print('Editar el archivo: constantes.py.')
-            print('Ejemplo: FIREFOX_PERFIL=C:/Users/usuario1/AppData/Roaming/Mozilla/Firefox/Profiles/<XXXXXXXX>.default-release')
+            print('Editar el archivo: .\constantes.py')
+            print('Ejemplo: FIREFOX_PERFIL=C:/Users/usuario1/AppData/Roaming/Mozilla/Firefox/Profiles/<XXXXX>.default-release')
+            sleep(5)
         else:
             self.opts.profile = constantes.FIREFOX_PERFIL        
             self.browser = Firefox(options=self.opts)
