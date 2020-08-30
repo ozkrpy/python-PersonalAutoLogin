@@ -11,7 +11,7 @@ class Bot():
     def __init__(self):   
         print("Inicializando el navegador.")
         self.opts = Options()
-        self.opts.headless = True
+        self.opts.headless = constantes.OCULTAR_NAVEGADOR
         if (constantes.FIREFOX_PERFIL != ''):
             self.opts.profile = constantes.FIREFOX_PERFIL
         self.browser = Firefox(options=self.opts)
@@ -21,7 +21,7 @@ class Bot():
         self.button_next.click()
         self.linea = input('LINEA (59597XXXXXXX):')
         self.numero_linea = self.browser.find_element_by_name('cphone')
-        if (self.linea == '' || self.linea == 'none') :
+        if (self.linea == '') :
             self.numero_linea.send_keys(constantes.LINEA)
         else:
             self.numero_linea.send_keys(self.linea)
@@ -52,7 +52,7 @@ class Bot():
                 self.reconectarse = input('Reconectarse(s/n)?: ')
         except Exception as error:
             print("No se activo la sesion VPN:","{}".format(error))
-        self.browser.close()
+        #self.browser.close()
         print('Ya se puede cerrar la aplicacion.')
 
 try:
