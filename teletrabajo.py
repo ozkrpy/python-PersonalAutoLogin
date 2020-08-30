@@ -21,7 +21,7 @@ class Bot():
         self.button_next.click()
         self.linea = input('LINEA (59597XXXXXXX):')
         self.numero_linea = self.browser.find_element_by_name('cphone')
-        if self.linea == '':
+        if (self.linea == '' || self.linea == 'none') :
             self.numero_linea.send_keys(constantes.LINEA)
         else:
             self.numero_linea.send_keys(self.linea)
