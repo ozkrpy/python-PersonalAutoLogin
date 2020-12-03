@@ -18,13 +18,16 @@ class Bot():
         print("Cargando sitio web.")
         self.browser.get(constantes.URL)
         self.button_next = self.browser.find_element_by_id('nextBtn')
+        sleep(1)
         self.button_next.click()
-        self.linea = input('LINEA (59597XXXXXXX):')
+        #self.linea = input('LINEA (59597XXXXXXX):')
         self.numero_linea = self.browser.find_element_by_name('cphone')
-        if (self.linea == '') :
-            self.numero_linea.send_keys(constantes.LINEA)
-        else:
-            self.numero_linea.send_keys(self.linea)
+        # if (self.linea == '') :
+        #     self.numero_linea.send_keys(constantes.LINEA)
+        # else:
+        #     self.numero_linea.send_keys(self.linea)
+        self.numero_linea.send_keys(constantes.LINEA)
+        sleep(2)
         self.button_next.click()
         print("Aguarda unos segundos para recepcionar el PIN.")
         sleep(2)
@@ -32,21 +35,22 @@ class Bot():
         self.pin = input('PIN:')
         self.numero_pin = self.browser.find_element_by_name('pin')
         self.numero_pin.send_keys(self.pin)
+        sleep(4)
         self.button_next.click()
         try:
             self.wait = WebDriverWait(self.browser, 10).until(
                 EC.presence_of_element_located((By.ID, "fo1"))
             )
             self.activar_forti = self.browser.find_element_by_id("fo1")
-            sleep(3)
+            sleep(4)
             self.reconectarse = 's'
             while self.reconectarse.lower()=='s':
                 self.activar_forti.click()
-                sleep(2)
+                sleep(4)
                 self.obj = self.browser.switch_to.alert
                 self.msg=self.obj.text
                 print ("Estado: "+self.msg)
-                sleep(1)
+                sleep(4)
                 self.obj.accept()
                 print("Listo, ya se puede acceder al VPN.")
                 self.reconectarse = input('Reconectarse(s/n)?: ')
