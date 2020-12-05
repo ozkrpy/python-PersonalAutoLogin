@@ -88,11 +88,11 @@ try:
     print('SELENIUM:', "Activar y habilitar la VPN.")
     activar_vpn(browser)
     habilitar_vpn(browser)
-    # sleep(10)
     
-    browser.close()
+    # browser.close()
     print('SELENIUM:', 'Ya se puede cerrar la aplicacion.')
 
 except Exception as error:
     print('SELENIUM:', "ERROR GENERAL DEL PROCESO:","{}".format(error))
-   
+    browser.close()
+    
