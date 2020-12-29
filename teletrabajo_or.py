@@ -89,7 +89,7 @@ try:
     activar_vpn(browser)
     habilitar_vpn(browser)
     
-    # browser.close()
+    browser.close()
     print('SELENIUM:', 'Ya se puede cerrar la aplicacion.')
 
 except Exception as error:

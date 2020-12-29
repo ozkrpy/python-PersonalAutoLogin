@@ -1,4 +1,4 @@
 URL = 'https://s.personal.com.py/teletrabajo/'
 LINEA = '595971325507'
 FIREFOX_PERFIL = ''
-OCULTAR_NAVEGADOR = False
+OCULTAR_NAVEGADOR = True

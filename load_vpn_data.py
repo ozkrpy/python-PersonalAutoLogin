@@ -10,6 +10,7 @@ def intento_teclado():
     forti = []
     while forti == []:
         forti = gui.getWindowsWithTitle('FortiClient -- The Security Fabric Agent')
+        sleep(1)
     sleep(1)
     gui.press('tab')
     gui.press('tab')
