@@ -10,5 +10,3 @@ echo BATCH: Listo, se inicio la aplicacion VPN
 cd C:\PrivateApps\Proyectos\python-PersonalAutoLogin\
 echo BATCH: Configurando VPN
 python.exe .\load_vpn_data.py
-echo BATCH: Iniciando el escritorio remoto
-%windir%\system32\mstsc.exe
