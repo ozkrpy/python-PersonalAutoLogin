@@ -18,10 +18,16 @@ def intento_teclado():
     gui.press('tab')
     gui.press('tab')
     gui.write(vpn_pass.KEY+'\n')
+    sleep(10)
 
 def iniciar_remoto():
     print('VPN: Inicio de la aplicacion del escritorio remoto.')
+    gui.keyDown('ctrl')
+    gui.press('tab')
+    gui.keyUp('ctrl')
     subprocess.Popen('C:\\Windows\\System32\\mstsc.exe')
+    sleep(1)
+    gui.press('return')
 
 try:
     intento_teclado()
@@ -32,4 +38,5 @@ try:
     iniciar_remoto()
 except Exception as e:
     print('VPN: Fallo el inicio del escritorio remoto.', e)
-   
+
+print('VPN: Procesado.')
