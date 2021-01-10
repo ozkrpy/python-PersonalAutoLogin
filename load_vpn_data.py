@@ -2,41 +2,51 @@ import pyautogui as gui
 from time import sleep
 import subprocess
 import vpn_pass
+import constantes
 
 def intento_click():
     gui.click(734, 575); 
     gui.write(vpn_pass.KEY+'\n')
 
+def iniciar_forti():
+    try:
+        print('VPN: Inicio de la aplicacion Forti Client.')
+        subprocess.Popen(constantes.DIRECTORIO_FORTI)
+    except Exception as e:
+        print('VPN: Fallo el inicio de Forti Client.', e)
+
 def intento_teclado():
-    print('VPN: Automatizando el teclado para cargar datos de usuario.')
-    forti = []
-    while forti == []:
-        forti = gui.getWindowsWithTitle('FortiClient -- The Security Fabric Agent')
+    try:
+        print('VPN: Aguardando que la ventana del Forti Cient se visualice.')
+        forti = []
+        while forti == []:
+            forti = gui.getWindowsWithTitle('FortiClient -- The Security Fabric Agent')
+            sleep(1)
         sleep(1)
-    sleep(1)
-    gui.press('tab')
-    gui.press('tab')
-    gui.press('tab')
-    gui.write(vpn_pass.KEY+'\n')
-    sleep(10)
+        gui.press('tab')
+        gui.press('tab')
+        gui.press('tab')
+        gui.write(vpn_pass.KEY+'\n')
+        sleep(11)
+    except Exception as e:
+        print('VPN: Fallo el intento de automatizar el teclado.')
+
 
 def iniciar_remoto():
-    print('VPN: Inicio de la aplicacion del escritorio remoto.')
-    gui.keyDown('ctrl')
-    gui.press('tab')
-    gui.keyUp('ctrl')
-    subprocess.Popen('C:\\Windows\\System32\\mstsc.exe')
-    sleep(1)
-    gui.press('return')
+    try:
+        print('VPN: Inicio de la aplicacion del escritorio remoto.')
+        gui.keyDown('ctrl')
+        gui.press('tab')
+        gui.keyUp('ctrl')
+        subprocess.Popen(constantes.DRIECTORIO_ESCRITORIO_REMOTO
+        )
+        sleep(1)
+        gui.press('return')
+    except Exception as e:
+        print('VPN: Fallo el inicio del escritorio remoto.', e)
 
-try:
+if __name__=='__main__':
+    iniciar_forti()
     intento_teclado()
-except Exception as e:
-    print('VPN: Fallo el intento de automatizar el teclado.')
-
-try: 
     iniciar_remoto()
-except Exception as e:
-    print('VPN: Fallo el inicio del escritorio remoto.', e)
-
-print('VPN: Procesado.')
+    print('VPN: Procesado.')
