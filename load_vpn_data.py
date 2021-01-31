@@ -6,7 +6,7 @@ import constantes
 
 def intento_click():
     gui.click(734, 575); 
-    gui.write(vpn_pass.KEY+'\n')
+    gui.write(vpn_pass.KEY)
 
 def iniciar_forti():
     try:
@@ -41,7 +41,7 @@ def iniciar_remoto():
         subprocess.Popen(constantes.DRIECTORIO_ESCRITORIO_REMOTO
         )
         sleep(1)
-        gui.press('return')
+        # gui.press('return')
     except Exception as e:
         print('VPN: Fallo el inicio del escritorio remoto.', e)
 
