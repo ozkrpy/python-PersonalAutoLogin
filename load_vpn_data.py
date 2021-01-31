@@ -23,6 +23,7 @@ def intento_teclado():
             forti = gui.getWindowsWithTitle('FortiClient -- The Security Fabric Agent')
             sleep(1)
         sleep(1)
+        print('VPN: Listo, cargando los parametros de usuario y password.')
         gui.press('tab')
         gui.press('tab')
         gui.press('tab')
