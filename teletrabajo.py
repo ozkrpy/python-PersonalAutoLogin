@@ -5,62 +5,143 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 from time import sleep
+import pyautogui as gui
+import subprocess
+import vpn_pass
 import constantes
 
-class Bot():
-    def __init__(self):   
-        print("Inicializando el navegador.")
-        self.opts = Options()
-        self.opts.headless = constantes.OCULTAR_NAVEGADOR
-        if (constantes.FIREFOX_PERFIL != ''):
-            self.opts.profile = constantes.FIREFOX_PERFIL
-        self.browser = Firefox(options=self.opts)
-        print("Cargando sitio web.")
-        self.browser.get(constantes.URL)
-        self.button_next = self.browser.find_element_by_id('nextBtn')
-        sleep(1)
-        self.button_next.click()
-        #self.linea = input('LINEA (59597XXXXXXX):')
-        self.numero_linea = self.browser.find_element_by_name('cphone')
-        # if (self.linea == '') :
-        #     self.numero_linea.send_keys(constantes.LINEA)
-        # else:
-        #     self.numero_linea.send_keys(self.linea)
-        self.numero_linea.send_keys(constantes.LINEA)
-        sleep(2)
-        self.button_next.click()
-        print("Aguarda unos segundos para recepcionar el PIN.")
-        sleep(2)
-        self.button_next.click()
-        self.pin = input('PIN:')
-        self.numero_pin = self.browser.find_element_by_name('pin')
-        self.numero_pin.send_keys(self.pin)
-        sleep(4)
-        self.button_next.click()
-        try:
-            self.wait = WebDriverWait(self.browser, 10).until(
-                EC.presence_of_element_located((By.ID, "fo1"))
-            )
-            self.activar_forti = self.browser.find_element_by_id("fo1")
-            sleep(4)
-            self.reconectarse = 's'
-            while self.reconectarse.lower()=='s':
-                self.activar_forti.click()
-                sleep(4)
-                self.obj = self.browser.switch_to.alert
-                self.msg=self.obj.text
-                print ("Estado: "+self.msg)
-                sleep(4)
-                self.obj.accept()
-                print("Listo, ya se puede acceder al VPN.")
-                self.reconectarse = input('Reconectarse(s/n)?: ')
-        except Exception as error:
-            print("No se activo la sesion VPN:","{}".format(error))
-        #self.browser.close()
-        print('Ya se puede cerrar la aplicacion.')
+def navegador_abrir():
+    print("Inicializando el navegador.")
+    opts = Options()
+    opts.headless = constantes.OCULTAR_NAVEGADOR
+    if (constantes.FIREFOX_PERFIL != ''):
+        opts.profile = constantes.FIREFOX_PERFIL
+    navegador = Firefox(options=opts)
+    return navegador
 
-try:
-    init_bot = Bot()
-except Exception as error:
-    print("ERROR GENERAL DEL PROCESO:","{}".format(error))
-   
+def navegador_cierre(browser):
+    print('Terminar la sesion del navegador.')
+    browser.quit()
+
+def ver_existencia(browser, buscar_elemento: str, criterio:str='ID'):
+    wait = ''
+    elemento_encontrado = ''
+    validar = False
+    i = 0
+    while validar==False: 
+        try:
+            if criterio=='NAME':
+                wait = WebDriverWait(browser, 10).until(
+                        EC.presence_of_element_located((By.NAME, buscar_elemento)))
+                elemento_encontrado = browser.find_element_by_name(buscar_elemento)
+                validar = True
+            else:
+                wait = WebDriverWait(browser, 10).until(
+                    EC.invisibility_of_element_located((By.XPATH, "//div[@class='modal']")))
+                elemento_encontrado = browser.find_element_by_id(buscar_elemento)
+                validar = True
+            if validar:
+                return elemento_encontrado
+        except Exception as error:
+            print('SELENIUM ERROR:', "No se detecto el elemento: "+buscar_elemento,"{}".format(error))
+            validar = False
+        i += 1
+    return False
+
+def siguiente(browser):
+    boton_siguiente = ver_existencia(browser, 'nextBtn')
+    boton_siguiente.click()
+
+def cargar_linea(browser):
+    print("Enviando numero de linea.", constantes.LINEA)
+    numero_linea = ver_existencia(browser, 'cphone', 'NAME')
+    numero_linea.send_keys(constantes.LINEA)
+    print("Aguardar PIN enviado a la linea.")
+
+def cargar_pin(browser):
+    numero_pin = ver_existencia(browser, 'pin', 'NAME')
+    pin = input('PIN:')
+    numero_pin.send_keys(pin)
+
+def activar_vpn(browser):
+    print("Procesando habilitacion del VPN.")
+    activar_forti = ver_existencia(browser, "fo1")
+    activar_forti.click()
+    
+def habilitar_vpn(browser):
+    sleep(2)
+    obj = browser.switch_to.alert
+    msg=obj.text
+    print ("Estado:", msg)
+    sleep(1)
+    obj.accept()
+    sleep(1)
+    navegador_cierre(browser)
+
+def iniciar_forti():
+    try:
+        print('VPN: Inicio de la aplicacion Forti Client.')
+        subprocess.Popen(constantes.DIRECTORIO_FORTI)
+    except Exception as e:
+        print('VPN: Fallo el inicio de Forti Client.', e)
+
+def intento_teclado():
+    try:
+        print('VPN: Aguardando que la ventana del Forti Cient se visualice.')
+        forti = []
+        while forti == []:
+            forti = gui.getWindowsWithTitle('FortiClient -- The Security Fabric Agent')
+            sleep(1)
+        sleep(2)
+        print('VPN: Listo, cargando los parametros de usuario y password.')
+        gui.press('tab')
+        gui.press('tab')
+        gui.press('tab')
+        gui.write(vpn_pass.KEY+'\n')
+        sleep(11)
+    except Exception as e:
+        print('VPN: Fallo el intento de automatizar el teclado.')
+
+def iniciar_remoto():
+    try:
+        print('VPN: Inicio de la aplicacion del escritorio remoto.')
+        gui.keyDown('ctrl')
+        gui.press('tab')
+        gui.keyUp('ctrl')
+        subprocess.Popen(constantes.DRIECTORIO_ESCRITORIO_REMOTO)
+        sleep(1)
+        # gui.press('return')
+    except Exception as e:
+        print('VPN: Fallo el inicio del escritorio remoto.', e)
+
+if __name__ == "__main__":
+    try:
+        validar = False
+
+        browser = navegador_abrir()
+
+        print("Cargando sitio web.")
+        browser.get(constantes.URL)
+        siguiente(browser)
+        
+        cargar_linea(browser)
+        siguiente(browser)
+
+        siguiente(browser)
+        
+        cargar_pin(browser)
+        siguiente(browser)
+
+        activar_vpn(browser)
+        habilitar_vpn(browser)
+
+        iniciar_forti()
+
+        intento_teclado()
+
+        iniciar_remoto()
+        print('Se completo la activacion VPN.')
+    except Exception as error:
+        print("ERROR GENERAL DEL PROCESO:","{}".format(error))
+        browser.quit()
+        
