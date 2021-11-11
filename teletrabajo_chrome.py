@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 from time import sleep
 import pyautogui as gui
@@ -11,9 +12,10 @@ import constantes
 
 def navegador_abrir():
     print("Inicializando el navegador.")
-    options = webdriver.ChromeOptions()
+    options = Options()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    navegador = webdriver.Chrome('./WebDrivers/chromedriver')
+    options.headless = True
+    navegador = webdriver.Chrome('./WebDrivers/chromedriver', options=options)
     return navegador
 
 def navegador_cierre(browser):

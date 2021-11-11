@@ -120,22 +120,22 @@ if __name__ == "__main__":
     try:
         validar = False
 
-        # browser = navegador_abrir()
+        browser = navegador_abrir()
 
-        # print("Cargando sitio web.")
-        # browser.get(constantes.URL)
-        # siguiente(browser)
+        print("Cargando sitio web.")
+        browser.get(constantes.URL)
+        siguiente(browser)
         
-        # cargar_linea(browser)
-        # siguiente(browser)
+        cargar_linea(browser)
+        siguiente(browser)
 
-        # siguiente(browser)
+        siguiente(browser)
         
-        # cargar_pin(browser)
-        # siguiente(browser)
+        cargar_pin(browser)
+        siguiente(browser)
 
-        # activar_vpn(browser)
-        # habilitar_vpn(browser)
+        activar_vpn(browser)
+        habilitar_vpn(browser)
 
         iniciar_forti()
 
