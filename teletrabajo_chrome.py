@@ -89,7 +89,7 @@ def intento_teclado():
         print('VPN: Aguardando que la ventana del Forti Cient se visualice.')
         forti = []
         while forti == []:
-            forti = gui.getWindowsWithTitle('FortiClient -- The Security Fabric Agent')
+            forti = gui.getWindowsWithTitle('FortiClient')
             sleep(1)
         print('VPN: Listo, cargando los parametros de usuario y password.')
         sleep(2)
