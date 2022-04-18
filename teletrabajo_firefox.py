@@ -99,6 +99,8 @@ def intento_teclado():
         gui.press('tab', interval=0.25)
         #gui.press('tab', interval=0.25)
         gui.write(vpn_pass.KEY, interval=0.05)
+        gui.press('tab', interval=0.25)
+        gui.press('tab', interval=0.25)
         gui.press('enter')
         sleep(11)
     except Exception as e:

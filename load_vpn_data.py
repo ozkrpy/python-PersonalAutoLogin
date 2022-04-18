@@ -20,14 +20,17 @@ def intento_teclado():
         print('VPN: Aguardando que la ventana del Forti Cient se visualice.')
         forti = []
         while forti == []:
-            forti = gui.getWindowsWithTitle('FortiClient -- The Security Fabric Agent')
+            forti = gui.getWindowsWithTitle('FortiClient')
             sleep(1)
         sleep(1)
         print('VPN: Listo, cargando los parametros de usuario y password.')
-        gui.press('tab')
-        gui.press('tab')
-        gui.press('tab')
-        gui.write(vpn_pass.KEY+'\n')
+        gui.press('tab', interval=0.25)
+        gui.press('tab', interval=0.25)
+        gui.press('tab', interval=0.25)
+        gui.write(vpn_pass.KEY, interval=0.05)
+        gui.press('tab', interval=0.25)
+        gui.press('tab', interval=0.25)
+        gui.press('enter', interval=0.25)
         sleep(11)
     except Exception as e:
         print('VPN: Fallo el intento de automatizar el teclado.')
