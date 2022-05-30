@@ -54,3 +54,4 @@ if __name__=='__main__':
     intento_teclado()
     iniciar_remoto()
     print('VPN: Procesado.')
+    exit()
