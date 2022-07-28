@@ -30,8 +30,8 @@ def intento_teclado():
         gui.write(vpn_pass.KEY, interval=0.05)
         gui.press('tab', interval=0.25)
         gui.press('tab', interval=0.25)
-        gui.press('enter', interval=0.25)
-        sleep(11)
+        gui.press('enter')
+        sleep(12)
     except Exception as e:
         print('VPN: Fallo el intento de automatizar el teclado.')
 
@@ -44,7 +44,11 @@ def iniciar_remoto():
         gui.keyUp('ctrl')
         subprocess.Popen(constantes.DRIECTORIO_ESCRITORIO_REMOTO
         )
-        sleep(1)
+        #sleep(1)
+        print('VPN: Procesado.')
+        exit()
+        print('Adios.')
+
         # gui.press('return')
     except Exception as e:
         print('VPN: Fallo el inicio del escritorio remoto.', e)
@@ -53,5 +57,4 @@ if __name__=='__main__':
     iniciar_forti()
     intento_teclado()
     iniciar_remoto()
-    print('VPN: Procesado.')
     exit()
